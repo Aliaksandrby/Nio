@@ -26,14 +26,14 @@ public class ReadMeFile {
                         StandardOpenOption.WRITE,
                         StandardOpenOption.CREATE
                 )
-                .write(ByteBuffer.allocate(s.length()).put(s.getBytes()).rewind());
+                .write(ByteBuffer.allocate(s.length()).put(s.getBytes()).rewind()); // added rewind();
     }
 
     public static String readFromReadMeFile(int sizeBuff) throws IOException {
         String s;
         ByteBuffer byteBuffer = ByteBuffer.allocate(sizeBuff);
         int size = Files.newByteChannel(Paths.get("readme.txt")).read(byteBuffer);
-        byteBuffer.rewind();
+        byteBuffer.rewind(); // added rewind();
         byte[] bytes = new byte[size];
         byteBuffer.get(bytes);
         s = new String(bytes);
@@ -43,8 +43,8 @@ public class ReadMeFile {
     public static void main(String[] args) throws IOException {
         String s = "Hello World";
         saveToReadMeFile2(s);
-        System.out.println(readFromReadMeFile(s.length()));
-
+        String newStr = readFromReadMeFile(s.length());
+        System.out.println(newStr);
     }
 
 }
